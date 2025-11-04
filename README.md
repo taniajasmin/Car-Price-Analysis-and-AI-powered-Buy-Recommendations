@@ -26,35 +26,6 @@ It combines:
 *Light mode (left) and dark mode (right) views of the Car Profit Analyser frontend interface.*
 
 
-## Folder Structure
-CAR_PRICE_COMPARE/
-│
-├── app/
-│   ├── init.py
-│   ├── ai_calculations.py      # All mathematical and AI logic
-│   ├── main.py                 # FastAPI main entry point
-│   ├── models.py               # Pydantic data models
-│   └── routes.py               # Modular route definitions
-│
-├── cars_data.csv               # Scraped dataset
-├── scrape_cars.py              # Scraping script (from AutoScout24, 2dehands etc.)
-├── index.html                  # Frontend interface
-├── requirements.txt            # Dependencies
-├── .env                        # Environment variables
-└── README.md                   # This documentation
-textCollapseWrapCopy## .env Configuration
-
-Create a `.env` file in the project root:
-```test
-OPENAI_API_KEY=your_openai_api_key_here
-SCRAPE_URL_AUTOSCOUT=https://www.autoscout24.be/lst
-SCRAPE_URL_2DEHANDS=https://www.2dehands.be
-DEBUG=True
-```
-
-```text
-Never upload `.env` to GitHub — add it to `.gitignore`.
-```
 ## AI Logic and Mathematical Breakdown
 
 All math is implemented in `ai_calculations.py`.
@@ -94,14 +65,48 @@ $$
 premium_bonus = 1.15 if is_premium else 1.0
 ```
 
-Why: Premium brands retain higher value.
-Best for: Adjusting the resale curve without distorting economy brands.
-5. Profit Calculation
-$$\text{expected\_profit} = (\text{base\_price} \times \text{premium\_bonus}) - (\text{depreciation\_rate} \times 1000)$$
-Why: Core AI decision metric for “BUY”, “HOLD”, or “SELL”.
-Best for: Real-time profit ranking in analyze-cars.
-AI Chat Suggestion Flow
-The /ai-suggest/ endpoint is state-based and acts as a conversational car advisor.
+### 5. Profit Calculation
+
+$$
+\text{expected\_profit} = (\text{base\_price} \times \text{premium\_bonus}) - (\text{depreciation\_rate} \times 1000)
+$$
+
+**Why:** Core AI decision metric for “BUY”, “HOLD”, or “SELL”.  
+**Best for:** Real-time profit ranking in analyze-cars.
+
+
+## Folder Structure
+```txt
+CAR_PRICE_COMPARE/
+│
+├── app/
+│   ├── init.py
+│   ├── ai_calculations.py      # All mathematical and AI logic
+│   ├── main.py                 # FastAPI main entry point
+│   ├── models.py               # Pydantic data models
+│   └── routes.py               # Modular route definitions
+│
+├── cars_data.csv               # Scraped dataset
+├── scrape_cars.py              # Scraping script (from AutoScout24, 2dehands etc.)
+├── index.html                  # Frontend interface
+├── requirements.txt            # Dependencies
+├── .env                        # Environment variables
+└── README.md                   # This documentation
+```
+
+## .env Configuration
+
+Create a `.env` file in the project root:
+```text
+OPENAI_API_KEY=your_openai_api_key_here
+SCRAPE_URL_AUTOSCOUT=https://www.autoscout24.be/lst
+SCRAPE_URL_2DEHANDS=https://www.2dehands.be
+DEBUG=True
+```
+
+```text
+Never upload `.env` to GitHub — add it to `.gitignore`.
+```
 
 
 ## AI Chat Suggestion Flow
